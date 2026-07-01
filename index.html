@@ -1,76 +1,71 @@
 <!doctype html>
 <html lang="el">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#111827" />
-  <title>Συντάκτης ΔΓΕΠ v3</title>
-  <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#111827">
+  <title>Συντάκτης ΔΓΕΠ</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>Συντάκτης ΔΓΕΠ v3</h1>
-    <div class="sub">Βήμα 1: Ιεραρχικό δέντρο παραγράφων / υποπαραγράφων / εδαφίων</div>
-  </header>
-
-  <main>
-    <section class="card">
-      <h2>Στοιχεία Διαταγής</h2>
-      <div class="grid">
-        <label>Μονάδα <input id="unit" placeholder="π.χ. Λόχος / Ίλη / Διμοιρία" /></label>
-        <label>Προϊστάμενο κλιμάκιο <input id="higher" placeholder="π.χ. Τάγμα" /></label>
-        <label>Τύπος <input id="doctype" value="ΔΙΑΤΑΓΗ ΕΠΙΧΕΙΡΗΣΕΩΝ" /></label>
-        <label>Αριθμός <input id="docno" placeholder="Υπ’ αριθμ." /></label>
-        <label>Ημερομηνία/ώρα <input id="dtg" placeholder="π.χ. 011200Α ΙΟΥΛ 26" /></label>
-        <label>Ωρική ζώνη <input id="tz" placeholder="π.χ. BRAVO" /></label>
-      </div>
-    </section>
-
-    <section class="card actions">
-      <button id="saveBtn">Αποθήκευση</button>
-      <button id="loadBtn">Φόρτωση</button>
-      <button id="exportTxtBtn">Εξαγωγή TXT</button>
-      <button id="exportJsonBtn">Εξαγωγή JSON</button>
-      <label class="fileBtn">Εισαγωγή JSON<input id="importJson" type="file" accept="application/json,.json" /></label>
-      <button id="clearBtn" class="danger">Καθαρισμός</button>
-    </section>
-
-    <section class="layout">
-      <aside class="card">
-        <h2>Δέντρο Διαταγής</h2>
-        <div id="tree"></div>
-      </aside>
-
-      <section class="card editor">
-        <h2 id="editTitle">Επιλογή τμήματος</h2>
-        <label>Τίτλος
-          <input id="nodeTitle" />
-        </label>
-        <label>Περιεχόμενο
-          <textarea id="nodeText" rows="10" placeholder="Συμπλήρωσε εδώ το κείμενο του συγκεκριμένου εδαφίου..."></textarea>
-        </label>
-        <label>Πηγή από διαταγή προϊσταμένου
-          <textarea id="nodeSource" rows="4" placeholder="Απόσπασμα/σημείωση από τη διαταγή του προϊσταμένου κλιμακίου"></textarea>
-        </label>
-        <div class="actions">
-          <button id="addChildBtn">+ Προσθήκη εδαφίου/υποεδάφιου</button>
-          <button id="deleteNodeBtn" class="danger">Διαγραφή κόμβου</button>
-        </div>
-      </section>
-    </section>
-
-    <section class="card">
-      <h2>Έλεγχος Πληρότητας</h2>
-      <div id="checks"></div>
-    </section>
-
-    <section class="card">
-      <h2>Προεπισκόπηση</h2>
-      <pre id="preview"></pre>
-    </section>
-  </main>
-
-  <script src="app.js"></script>
+<header>
+  <h1>Συντάκτης ΔΓΕΠ</h1>
+  <p>Προ του κειμένου • Κυρίως κείμενο • Μετά το κείμενο</p>
+</header>
+<nav>
+  <button data-tab="tree" class="active">Δέντρο</button>
+  <button data-tab="edit">Επεξεργασία</button>
+  <button data-tab="preview">Προεπισκόπηση</button>
+  <button data-tab="tools">Εργαλεία</button>
+</nav>
+<main>
+<section id="tree" class="tab active">
+  <div class="card">
+    <h2>Ιεραρχία Διαταγής</h2>
+    <div id="treeView"></div>
+  </div>
+</section>
+<section id="edit" class="tab">
+  <div class="card">
+    <h2 id="editTitle">Επιλογή στοιχείου</h2>
+    <label>Τίτλος</label>
+    <input id="nodeTitle" />
+    <label>Κείμενο</label>
+    <textarea id="nodeText" rows="12"></textarea>
+    <label>Πηγή από διαταγή προϊσταμένου / σημείωση</label>
+    <textarea id="nodeSource" rows="4"></textarea>
+    <div class="row">
+      <button id="saveNode">Αποθήκευση</button>
+      <button id="addChild">+ Υποστοιχείο</button>
+      <button id="deleteNode" class="danger">Διαγραφή</button>
+    </div>
+  </div>
+</section>
+<section id="preview" class="tab">
+  <div class="card">
+    <h2>Προεπισκόπηση Διαταγής</h2>
+    <pre id="previewText"></pre>
+  </div>
+</section>
+<section id="tools" class="tab">
+  <div class="card">
+    <h2>Εισαγωγή Διαταγής Προϊσταμένου</h2>
+    <p>Επικόλλησε κείμενο. Η εφαρμογή θα το κρατήσει ως πηγή και θα προσπαθήσει να συμπληρώσει αντίστοιχες ενότητες.</p>
+    <textarea id="superiorText" rows="10"></textarea>
+    <div class="row">
+      <button id="analyzeSuperior">Ανάλυση & πρόχειρη συμπλήρωση</button>
+      <button id="saveAll">Αποθήκευση στη συσκευή</button>
+      <button id="resetAll" class="danger">Επαναφορά προτύπου</button>
+    </div>
+    <div class="row">
+      <button id="downloadTxt">Λήψη TXT</button>
+      <button id="downloadJson">Λήψη JSON</button>
+      <input id="loadJson" type="file" accept="application/json">
+    </div>
+  </div>
+</section>
+</main>
+<script src="app.js"></script>
 </body>
 </html>
