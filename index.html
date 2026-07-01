@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="el">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1f2937">
+  <title>Συντάκτης Διαταγών</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Συντάκτης Διαταγών</h1>
+  <p>Offline πρότυπο σύνταξης και εξαγωγής κειμένου</p>
+</header>
+<main>
+  <section class="card">
+    <h2>Στοιχεία</h2>
+    <label>Τίτλος διαταγής<input id="title" placeholder="π.χ. ΔΙΑΤΑΓΗ ΕΠΙΧΕΙΡΗΣΕΩΝ"></label>
+    <label>Μονάδα<input id="unit" placeholder="Μονάδα / Κλιμάκιο"></label>
+    <label>Ημερομηνία - Ώρα<input id="dt" type="datetime-local"></label>
+    <label>Τόπος έκδοσης<input id="place"></label>
+    <label>Αποδέκτες<textarea id="recipients" rows="2"></textarea></label>
+  </section>
+
+  <section class="card">
+    <h2>Κύριο σώμα</h2>
+    <label>1. Κατάσταση<textarea id="situation" rows="5"></textarea></label>
+    <label>2. Αποστολή<textarea id="mission" rows="4"></textarea></label>
+    <label>3. Εκτέλεση<textarea id="execution" rows="5"></textarea></label>
+    <label>4. Διοικητική μέριμνα<textarea id="support" rows="4"></textarea></label>
+    <label>5. Διοίκηση και διαβιβάσεις<textarea id="command" rows="4"></textarea></label>
+  </section>
+
+  <section class="card">
+    <h2>Παραρτήματα / Σημειώσεις</h2>
+    <textarea id="annexes" rows="5" placeholder="Προαιρετικά παραρτήματα, πίνακες, οδηγίες μορφοποίησης"></textarea>
+  </section>
+
+  <section class="buttons">
+    <button onclick="saveDraft()">Αποθήκευση</button>
+    <button onclick="loadDraft()">Φόρτωση</button>
+    <button onclick="clearForm()">Καθαρισμός</button>
+    <button onclick="makePreview()">Προεπισκόπηση</button>
+    <button onclick="downloadTxt()">Εξαγωγή TXT</button>
+  </section>
+
+  <section class="card">
+    <h2>Έλεγχος πληρότητας</h2>
+    <div id="checklist"></div>
+  </section>
+
+  <section class="card">
+    <h2>Προεπισκόπηση</h2>
+    <pre id="preview"></pre>
+  </section>
+</main>
+<footer>Τα δεδομένα αποθηκεύονται τοπικά στη συσκευή.</footer>
+<script src="app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js');
+}
+</script>
+</body>
+</html>
